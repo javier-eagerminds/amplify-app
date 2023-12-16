@@ -7,9 +7,10 @@ import { generateClient } from 'aws-amplify/api';
 
 function App({ signOut }) {
   const [ notes, setNotes ] = useState([])
-  const client = generateClient();
+  
 
   const fetchNotes = useCallback(async () => {
+    const client = generateClient();
     const result = await client.graphql({
       query: listNotes,
       authMode: 'AMAZON_COGNITO_USER_POOLS'
@@ -18,6 +19,7 @@ function App({ signOut }) {
   }, [setNotes])
 
   const handleCreateNote = useCallback(async () => {
+    const client = generateClient();
     await client.graphql({
       query: createNote,
       variables: { input: { text: window.prompt("New note") } },
@@ -27,6 +29,7 @@ function App({ signOut }) {
   }, [fetchNotes])
 
   const handleDeleteNote = useCallback(async (id) => {
+    const client = generateClient();
     await client.graphql({
       query: deleteNote,
       variables: { input: { id: id } },
